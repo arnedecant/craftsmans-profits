@@ -1,0 +1,69 @@
+/*==============================
+=            COLORS            =
+==============================*/
+
+$cPrimary:				#242322; // Tuatara
+$cSecondary:			#a5c4bc; // Opal
+$cTertiary: 			#402f44; // Blackcurrant
+
+$cHighlight:			#242322;
+$cDefault:				#ffffff;
+$cBackground: 			#f5f5f5;
+$cText:					#333333;
+$cTextLight:			#4a4a4a;
+$cBlack:				#141514;
+
+$cSuccess:				#27ae60;
+$cError:    			#e74c3c;
+$cFavorite:				#f1c40f;
+
+$cFacebook:				#3b5998;
+$cLinkedin:				#007bb5;
+$cTwitter:				#55acee;
+$cGooglePlus:			#dd4b39;
+$cYoutube:				#bb0000;
+
+/*=============================
+=            FONTS            =
+=============================*/
+
+@font-face {
+	font-family: 'Modern Sans';
+	src: url('../fonts/ModernSans.eot');
+	src: url('../fonts/ModernSans.eot?#iefix') format('embedded-opentype'),
+		url('../fonts/ModernSans.woff') format('woff'),
+		url('../fonts/ModernSans.ttf') format('truetype');
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'Adamas';
+	src: url('../fonts/Adamas-Regular.eot');
+	src: url('../fonts/Adamas-Regular.eot?#iefix') format('embedded-opentype'),
+		url('../fonts/Adamas-Regular.woff') format('woff'),
+		url('../fonts/Adamas-Regular.ttf') format('truetype');
+	font-weight: normal;
+	font-style: normal;
+}
+
+$fPrimary: 				'PT Sans', sans-serif;
+$fSecondary:			'Modern Sans', sans-serif;
+
+
+/*==============================
+=            IMAGES            =
+==============================*/
+
+// $imgLogo: 				url('../img/logo.png');
+$imgBackground:				url('../img/subway-lines.png');
+
+
+/*===============================
+=            GLOBALS            =
+===============================*/
+
+// $global_margin:			25px;
+// $mobile:				600px;
+// $portrait:				800px;
+// $landscape:				1100px;

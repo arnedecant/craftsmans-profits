@@ -1,0 +1,41 @@
+//@import 'libs/bourbon'; // http://bourbon.io/
+@import 'vendor/*';
+@import 'materialize/*';
+@import 'variables/*';
+@import 'partials/*';
+
+*, *::after, *::before {
+	box-sizing: border-box;
+}
+
+.background {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100vw;
+	height: 100vh;
+	background-image: $imgBackground;
+	opacity: 0.1;
+	z-index: -1;
+}
+
+h1 {
+	font-family: 'Amatic SC', 'Roboto', 'sans-serif';
+	text-align: center;
+}
+
+// .results-container {
+// 	max-width: 98%;
+// 	margin: 0 auto;
+// }
+
+.cards-container {
+	column-break-inside: avoid;
+	column-count: 5;
+
+	.card {
+		display: inline-block;
+		overflow: visible;
+		width: 100%;
+	}
+}

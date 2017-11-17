@@ -1,0 +1,56 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="description" content="Web scraper">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Web scraper</title>
+        <!-- <link rel="stylesheet" href="css/font-awesome.min.css"> -->
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Amatic+SC|Roboto:300,400,600,700|Material+Icons">
+        <!-- <link rel="stylesheet" href="css/normalize.css"> -->
+        <link rel="stylesheet" href="css/styles.css">
+        <link rel="author" href="humans.txt">
+    </head>
+    <body>
+        <div class="background"></div>
+        <div class="container scraper-container">
+            <h1>Web scraper</h1>
+            <section class="scraper card-panel">
+                <form class="scraper">
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <input id="web_address" type="text" class="validate address" value="https://www.9gag.com/">
+                            <label for="web_address">Web address</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <select class="element">
+                                <option value="" disabled selected>Choose your option</option>
+                            </select>
+                            <label>Element</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <button class="btn waves-effect waves-light" type="submit" name="action">
+                                <span>Scrape</span>
+                                <!-- <i class="material-icons right">send</i> -->
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- <input type="checkbox" id="full-website" disabled><label for="full-website">Scrape full website</label> -->
+                    
+                </form>
+            </section>
+        </div>
+        <div class="container results-container">
+            
+        </div>
+        
+        <script src="js/jquery-3.2.1.js"></script>
+        <script src="js/materialize.min.js"></script>
+        <script src="js/main.js"></script>
+    </body>
+</html>
