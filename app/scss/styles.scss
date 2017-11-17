@@ -1,41 +1,72 @@
 //@import 'libs/bourbon'; // http://bourbon.io/
+@import '_normalize.scss';
 @import 'vendor/*';
 @import 'materialize/*';
 @import 'variables/*';
 @import 'partials/*';
 
+* {
+	font-family: $fPrimary;
+}
+
 *, *::after, *::before {
 	box-sizing: border-box;
 }
 
-.background {
-	position: fixed;
-	top: 0;
-	left: 0;
-	width: 100vw;
-	height: 100vh;
+table {
+	th, td {
+		text-align: left;
+
+		&.number {
+			text-align: right;
+		}
+	}
+}
+
+body {
 	background-image: $imgBackground;
-	opacity: 0.1;
-	z-index: -1;
 }
 
 h1 {
-	font-family: 'Amatic SC', 'Roboto', 'sans-serif';
+	font-family: $fPrimary;
 	text-align: center;
+	font-weight: 300;
+	font-size: 3em;
 }
 
-// .results-container {
-// 	max-width: 98%;
-// 	margin: 0 auto;
-// }
+section.items {
+	display: flex;
+	justify-content: center;
+	flex-wrap: wrap;
+}
 
-.cards-container {
-	column-break-inside: avoid;
-	column-count: 5;
+article.item {
+	background-color: $cDefault;
+	box-shadow: $boxShadow;
+	margin: 10px;
+	padding: 10px;
+	width: 30%;
 
-	.card {
-		display: inline-block;
-		overflow: visible;
+	header, footer {
+		display: flex;
+	}
+
+	header {
+		align-items: center;
+
+		h2, span {
+			font-size: 1.5em;
+			margin: 0;
+			padding: 0;
+			font-weight: 700;
+		}
+
+		> span.price {
+			margin-left: auto;
+		}
+	}
+
+	table {
 		width: 100%;
 	}
 }

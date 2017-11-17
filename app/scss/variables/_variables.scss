@@ -27,36 +27,16 @@ $cYoutube:				#bb0000;
 =            FONTS            =
 =============================*/
 
-@font-face {
-	font-family: 'Modern Sans';
-	src: url('../fonts/ModernSans.eot');
-	src: url('../fonts/ModernSans.eot?#iefix') format('embedded-opentype'),
-		url('../fonts/ModernSans.woff') format('woff'),
-		url('../fonts/ModernSans.ttf') format('truetype');
-	font-weight: normal;
-	font-style: normal;
-}
-
-@font-face {
-	font-family: 'Adamas';
-	src: url('../fonts/Adamas-Regular.eot');
-	src: url('../fonts/Adamas-Regular.eot?#iefix') format('embedded-opentype'),
-		url('../fonts/Adamas-Regular.woff') format('woff'),
-		url('../fonts/Adamas-Regular.ttf') format('truetype');
-	font-weight: normal;
-	font-style: normal;
-}
-
-$fPrimary: 				'PT Sans', sans-serif;
-$fSecondary:			'Modern Sans', sans-serif;
+$fPrimary: 				'Spectral SC', sans-serif;
+$fSecondary:			$fPrimary;
 
 
 /*==============================
 =            IMAGES            =
 ==============================*/
 
-// $imgLogo: 				url('../img/logo.png');
-$imgBackground:				url('../img/subway-lines.png');
+// $imgLogo: 			url('../img/logo.png');
+$imgBackground:			url('../img/exclusive_paper.png');
 
 
 /*===============================
@@ -67,3 +47,5 @@ $imgBackground:				url('../img/subway-lines.png');
 // $mobile:				600px;
 // $portrait:				800px;
 // $landscape:				1100px;
+
+$boxShadow: 			0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);

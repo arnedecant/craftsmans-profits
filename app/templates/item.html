@@ -1,0 +1,41 @@
+<article class="item" data-id="{{id}}">
+    <header>
+        <h2>{{name}}</h2><span class="price">{{marketPrice}}</span>
+    </header>
+    <main>
+        <table>
+            <thead>
+                <tr>
+                    <th>Material</th>
+                    <th class="number">PPU</th>
+                    <th class="number">Amount</th>
+                    <th class="number">Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each reagents}}
+                <tr>
+                    <td data-cell="reagent">{{this.name}}</td>
+                    <td class="number" data-cell="ppu">{{this.ppu}}</td>
+                    <td class="number" data-cell="amount">{{this.amount}}</td>
+                    <td class="number" data-cell="total">{{this.total}}</td>
+                </tr>
+                {{/each}}
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="3">Total</td>
+                    <td class="number">{{reagentsTotal}}</td>
+                </tr>
+                <tr>
+                    <td colspan="3">Profit</td>
+                    <td class="number">{{profit}}</td>
+                </tr>
+            </tfoot>
+        </table>
+    </main>
+    <footer>
+        <button>Fetch</button>
+        <button>Remove</button>
+    </footer>
+</article>
