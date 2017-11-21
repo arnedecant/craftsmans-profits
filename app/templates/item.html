@@ -1,11 +1,12 @@
 <article class="item" data-id="{{id}}">
     <header>
-        <h2><a href="http://www.wowhead.com/item={{id}}">{{name}}</a></h2><span class="price">{{marketPrice}}</span>
+        <h2><a href="http://www.wowhead.com/item={{id}}" target="_blank">{{name}}</a></h2><span class="price">{{ppu}}</span>
     </header>
     <main>
         <table>
             <thead>
                 <tr>
+                    <th></th>
                     <th>Material</th>
                     <th class="number">PPU</th>
                     <th class="number">Amount</th>
@@ -14,24 +15,30 @@
             </thead>
             <tbody>
                 {{#each reagents}}
-                <tr>
-                    <td data-cell="reagent">{{this.name}}</td>
+                <tr data-id="{{this.id}}">
+                    <td><input type="checkbox" name="reagent-{{this.id}}"></td>
+                    <td data-cell="reagent"><a href="http://www.wowhead.com/item={{this.id}}" target="_blank">{{this.name}}</a></td>
                     <td class="number" data-cell="ppu">{{this.ppu}}</td>
-                    <td class="number" data-cell="amount">{{this.amount}}</td>
+                    <td class="number" data-cell="amount"><input type="number" value="{{this.amount}}"></td>
                     <td class="number" data-cell="total">{{this.total}}</td>
                 </tr>
                 {{/each}}
             </tbody>
             <tfoot>
                 <tr>
-                    <td colspan="3">Total</td>
+                    <td colspan="4">Total</td>
                     <td class="number">{{reagentsTotal}}</td>
                 </tr>
                 <tr>
-                    <td colspan="3">Profit</td>
+                    <td colspan="4">Profit</td>
                     <td class="number">{{profit}}</td>
                 </tr>
             </tfoot>
         </table>
     </main>
+    <footer>
+        <button class="add-reagent">Add reagent</button>
+        <button class="remove-reagent">Remove selected</button>
+        <button class="delete">Delete</button>
+    </footer>
 </article>

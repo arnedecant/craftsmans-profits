@@ -42,6 +42,10 @@ h1 {
 	font-size: 3em;
 }
 
+a > span[class^="icon"] {
+	margin-right: 5px;
+}
+
 section.items {
 	display: flex;
 	justify-content: center;
@@ -85,6 +89,12 @@ article.item {
 		}
 	}
 
+	button {
+		&.delete {
+			margin-left: auto;
+		}
+	}
+
 	header, footer {
 		display: flex;
 	}
@@ -107,15 +117,15 @@ article.item {
 			text-decoration: none;
 			color: $cBlack;
 			display: flex;
-
-			span[class^="icon"] {
-				margin-right: 5px;
-			}
 		}
 
 		> span.price {
 			margin-left: auto;
 		}
+	}
+
+	footer {
+		margin-top: auto;
 	}
 
 	table {
@@ -132,6 +142,19 @@ article.item {
 			td {
 				font-weight: 700;
 			}
+		}
+
+		a {
+			text-decoration: none;
+			color: $cBlack;
+		}
+
+		input {
+			max-width: 70px;
+			text-align: center;
+			border: 1px solid $cFadedBlack;
+			outline: none;
+			padding: 2px 5px;
 		}
 	}
 }

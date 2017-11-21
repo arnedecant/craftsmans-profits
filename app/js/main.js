@@ -2,15 +2,17 @@ const items = [
 	{
 		id: '124461',
 	    name: 'Demonsteel Bar',
-	    marketPrice: '75.00',
+	    ppu: '75.00',
 	    reagents: [
 	        {
+	        	id: '123918',
 	            name: 'Leystone Ore',
 	            ppu: '8.06',
 	            amount: '1',
 	            total: '8.06'
 	        },
 	        {
+	        	id: '123919',
 	            name: 'Felslate',
 	            ppu: '21.32',
 	            amount: '2',
@@ -23,9 +25,10 @@ const items = [
 	{
 		id: '123956',
 	    name: 'Leystone Hoofplates',
-	    marketPrice: '7663.00',
+	    ppu: '7663.00',
 	    reagents: [
 	        {
+	        	id: '123918',
 	            name: 'Leystone Ore',
 	            ppu: '8.06',
 	            amount: '25',
@@ -54,10 +57,11 @@ let config = {
 		items: localStorage.getItem('items'),
 		realm: localStorage.getItem('realm'),
 		locale: localStorage.getItem('locale'),
-		namespace: localStorage.getItem('namespace')
+		namespace: localStorage.getItem('namespace'),
+		auctions: JSON.parse(localStorage.getItem('auctions')) || []
 	},
 	data: {
-		auctions: localStorage.getItem('auctions'),
+		auctions: null,
 		realms: localStorage.getItem('realms'),
 	}
 }
@@ -75,49 +79,31 @@ function init() {
 	config.templates.item = Handlebars.getTemplate('item');
 	config.templates.itemdummy = Handlebars.getTemplate('itemdummy');
 
-	initEventListeners();
-
 	renderItems(config.settings.items);
 	// getAuctions(config.settings.realm);
 }
 
-function initEventListeners() {
-	// const clickEvents = [
-	// 	{element: 'article.item.dummy > button', callback: 'addNewItem'},
-	// 	{element: 'body', callback: 'addNewItem'}
-	// ];
+function initItemEventListeners() {
+	const clickEvents = [
+		{element: 'article.item.dummy > button', callback: addNewItem},
+	];
 
-	// for (let i = 0, ce; ce = clickEvents[i]; i++) {
-	// 	let element = document.querySelector(ce.element);
+	for (let i = 0, ce; ce = clickEvents[i]; i++) {
+		let element = document.querySelector(ce.element);
 
-	// 	if (element) {
-	// 		element.removeEventListener('click', ce.callback);
-	// 		element.addEventListener('click', ce.callback);
-	// 	}
-	// }
-
-	$('article.item.dummy > button').off('click');
-	$('article.item.dummy > button').on('click', 'addNewItem');
+		if (element) {
+			element.removeEventListener('click', ce.callback);
+			element.addEventListener('click', ce.callback);
+		}
+	}
 }
 
 function addNewItem(e) {
-	// let id = prompt("Please enter the item ID", "New item");
-	console.log('addNewItem');
+	let id = prompt('Please enter the item ID', '124461');
+	getItem(id);
 }
 
-function getRequestUrl(baseurl, keys) {
-	const url = 'https://eu.api.battle.net';
-
-	if (keys) {
-		for (let key in keys) {
-			baseurl = baseurl.replace('{{' + key + '}}', keys[key]);
-		}
-	}
-
-	return url + baseurl;
-}
-
-function getAuctions(realm, item) {
+function getAuctions(realm = config.settings.realm, onSuccess = null) {
 	$.ajax({
         url: getRequestUrl(config.api.auctions, {realm: realm}),
         data: {
@@ -140,8 +126,63 @@ function getAuctions(realm, item) {
 
         	$.getJSON('https://whateverorigin.herokuapp.com/get?url=' + encodeURIComponent(newurl) + '&callback=?', function(data){
         		config.data.auctions = data.contents.auctions;
-        		console.log(config.data.auctions);
+        		if (onSuccess) invokeFunction(onSuccess.function, onSuccess.params);
         	});
+        }
+    });
+}
+
+function getItem(id) {
+	if (!id) return;
+
+	if (!config.data.auctions) {
+		getAuctions(config.settings.realm, {
+			function: 'getItem',
+			params: [id]
+		});
+
+		return;
+	}
+
+	$.ajax({
+        url: getRequestUrl(config.api.item, {id: id}),
+        data: {
+        	locale: config.settings.locale,
+        	apikey: config.key
+        },
+        success: function(data) {
+        	const item = data;
+        	let itemAuctions = [];
+
+    		for (let i = 0, auction; auction = config.data.auctions[i]; i++) {
+        		if (auction.item == item.id) {
+        			itemAuctions.push(auction);
+        		}
+        	}
+
+        	config.settings.auctions = config.settings.auctions.concat(itemAuctions);
+        	localStorage.setItem('auctions', JSON.stringify(config.settings.auctions));
+
+        	let lowestPPU = 0;
+        	for (let i = 0, auction; auction = itemAuctions[i]; i++) {
+        		let ppu = auction.buyout / auction.quantity;
+        		if (lowestPPU == 0 || lowestPPU > ppu) lowestPPU = ppu;
+        	}
+
+        	lowestPPU = lowestPPU / 10000; //only gold, no silver (00), no copper (00).
+
+        	let newItem = {
+        		id: id,
+        		name: item.name,
+        		ppu: lowestPPU,
+        		reagentsTotal: 0,
+	    		profit: lowestPPU
+        	}
+
+        	console.log(newItem);
+
+        	config.settings.items.push(newItem);
+        	renderItems(config.settings.items);
         }
     });
 }
@@ -159,7 +200,7 @@ function getRealms() {
     });
 }
 
-function renderItems(items) {
+function renderItems(items = config.settings.items) {
 	$('section.items').empty();
 	const template = config.templates.item;
 
@@ -170,6 +211,25 @@ function renderItems(items) {
 
 	const dummytemplate = config.templates.itemdummy;
 	$('section.items').append(dummytemplate());
+
+	initItemEventListeners();
+}
+
+function getRequestUrl(baseurl, keys) {
+	const url = 'https://eu.api.battle.net';
+
+	if (keys) {
+		for (let key in keys) {
+			baseurl = baseurl.replace('{{' + key + '}}', keys[key]);
+		}
+	}
+
+	return url + baseurl;
+}
+
+function invokeFunction(fn, args) {
+    fn = (typeof fn == "function") ? fn : window[fn];  // Allow fn to be a function object or the name of a global function
+    return fn.apply(this, args || []);  // args is optional, use an empty array by default
 }
 
 Handlebars.getTemplate = function(name) {
@@ -185,7 +245,6 @@ Handlebars.getTemplate = function(name) {
             async: false
         });
     }
-    
-    initEventListeners();
+
     return Handlebars.templates[name];
 };
