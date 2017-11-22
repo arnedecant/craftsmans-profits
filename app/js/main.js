@@ -40,7 +40,7 @@ const items = [
 	}
 ];
 
-let config = {
+let global = {
 	key: 'cqb2mczuev8r8b8bgw6qzyhznpcwvxg3',
 	api: {
 		auctions: '/wow/auction/data/{{realm}}',
@@ -67,20 +67,39 @@ let config = {
 }
 
 jQuery(document).ready(function($){
-	config.settings.locale = 'en_GB';
-	config.settings.namespace = 'dynamic-eu';
-	config.settings.realm = 'Stormrage';
-	config.settings.items = items;
+	global.settings.locale = 'en_GB';
+	global.settings.namespace = 'dynamic-eu';
+	global.settings.items = items;
 
 	init();
 });
 
 function init() {
-	config.templates.item = Handlebars.getTemplate('item');
-	config.templates.itemdummy = Handlebars.getTemplate('itemdummy');
+	global.templates.item = Handlebars.getTemplate('item');
+	global.templates.itemdummy = Handlebars.getTemplate('itemdummy');
 
-	renderItems(config.settings.items);
-	// getAuctions(config.settings.realm);
+	renderItems(global.settings.items);
+
+	initSettings();
+}
+
+function initSettings() {
+	let form = document.querySelector('form.settings'),
+		realm = document.querySelector('form.settings #realm'),
+		locale = document.querySelector('form.settings #locale')
+
+	realm.value = global.settings.realm;
+	document.querySelector('form.settings').addEventListener('submit', function(e) {
+		e.preventDefault();
+		updateSetting('realm', realm.value);
+		updateSetting('locale', locale.options[locale.selectedIndex].value);
+	});
+}
+
+function updateSetting(key, value, toJSON = false) {
+	global.settings[key] = value;
+	if (toJSON) value = JSON.stringify(value);
+	localStorage.setItem(key, value);
 }
 
 function initItemEventListeners() {
@@ -103,12 +122,12 @@ function addNewItem(e) {
 	getItem(id);
 }
 
-function getAuctions(realm = config.settings.realm, onSuccess = null) {
+function getAuctions(realm = global.settings.realm, onSuccess = null) {
 	$.ajax({
-        url: getRequestUrl(config.api.auctions, {realm: realm}),
+        url: getRequestUrl(global.api.auctions, {realm: realm}),
         data: {
-        	locale: config.locale,
-        	apikey: config.key,
+        	locale: global.locale,
+        	apikey: global.key,
         },
         success: function(data) {
         	if (!data.files[0].url) {
@@ -125,7 +144,7 @@ function getAuctions(realm = config.settings.realm, onSuccess = null) {
         	}
 
         	$.getJSON('https://whateverorigin.herokuapp.com/get?url=' + encodeURIComponent(newurl) + '&callback=?', function(data){
-        		config.data.auctions = data.contents.auctions;
+        		global.data.auctions = data.contents.auctions;
         		if (onSuccess) invokeFunction(onSuccess.function, onSuccess.params);
         	});
         }
@@ -135,8 +154,8 @@ function getAuctions(realm = config.settings.realm, onSuccess = null) {
 function getItem(id) {
 	if (!id) return;
 
-	if (!config.data.auctions) {
-		getAuctions(config.settings.realm, {
+	if (!global.data.auctions) {
+		getAuctions(global.settings.realm, {
 			function: 'getItem',
 			params: [id]
 		});
@@ -145,23 +164,23 @@ function getItem(id) {
 	}
 
 	$.ajax({
-        url: getRequestUrl(config.api.item, {id: id}),
+        url: getRequestUrl(global.api.item, {id: id}),
         data: {
-        	locale: config.settings.locale,
-        	apikey: config.key
+        	locale: global.settings.locale,
+        	apikey: global.key
         },
         success: function(data) {
         	const item = data;
         	let itemAuctions = [];
 
-    		for (let i = 0, auction; auction = config.data.auctions[i]; i++) {
+    		for (let i = 0, auction; auction = global.data.auctions[i]; i++) {
         		if (auction.item == item.id) {
         			itemAuctions.push(auction);
         		}
         	}
 
-        	config.settings.auctions = config.settings.auctions.concat(itemAuctions);
-        	localStorage.setItem('auctions', JSON.stringify(config.settings.auctions));
+        	global.settings.auctions = global.settings.auctions.concat(itemAuctions);
+        	localStorage.setItem('auctions', JSON.stringify(global.settings.auctions));
 
         	let lowestPPU = 0;
         	for (let i = 0, auction; auction = itemAuctions[i]; i++) {
@@ -181,35 +200,35 @@ function getItem(id) {
 
         	console.log(newItem);
 
-        	config.settings.items.push(newItem);
-        	renderItems(config.settings.items);
+        	global.settings.items.push(newItem);
+        	renderItems(global.settings.items);
         }
     });
 }
 
 function getRealms() {
 	$.ajax({
-        url: getRequestUrl(config.api.realms),
+        url: getRequestUrl(global.api.realms),
         data: {
-        	namespace: config.settings.namespace,
-        	locale: config.settings.locale
+        	namespace: global.settings.namespace,
+        	locale: global.settings.locale
         },
         success: function(data) {
-        	config.data.realms = data;
+        	global.data.realms = data;
         }
     });
 }
 
-function renderItems(items = config.settings.items) {
+function renderItems(items = global.settings.items) {
 	$('section.items').empty();
-	const template = config.templates.item;
+	const template = global.templates.item;
 
 	for (let i = 0, item; item = items[i]; i++) {
 		let html = template(item);
 		$('section.items').append(html);
 	}
 
-	const dummytemplate = config.templates.itemdummy;
+	const dummytemplate = global.templates.itemdummy;
 	$('section.items').append(dummytemplate());
 
 	initItemEventListeners();

@@ -18,18 +18,24 @@
         <div class="background"></div>
         <div class="container scraper-container">
             <h1>Craftsman's Profits</h1>
-            <section class="info">
-                <form>
+            <section class="settings">
+                <form class="settings">
                     <p>
                         <label for="region">Region</label>
                         <select name="region" id="region">
-                            <option value="en_GB">Europe</option>
+                            <option value="eu">Europe</option>
                         </select>
                     </p>
                     <p>
                         <label for="realm">Realm</label>
                         <!-- <select name="realm" id="realm"></select> -->
                         <input type="text" name="realm" id="realm"></input>
+                    </p>
+                    <p>
+                        <label for="locale">Locale</label>
+                        <select name="locale" id="locale">
+                            <option value="en_GB">en_GB</option>
+                        </select>
                     </p>
                     <p>
                         <button type="submit">Save</button>
