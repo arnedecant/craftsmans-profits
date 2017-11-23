@@ -21,7 +21,10 @@ a, button {
 }
 
 a.btn, button {
-	display: inline-block;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+
 	background-color: $cPrimary;
 	color: $cDefault;
 	border-radius: 0;
@@ -35,5 +38,9 @@ a.btn, button {
 
 	&:hover {
 		background-color: lighten($cPrimary, 20%);
+	}
+
+	i {
+		margin-right: 5px;
 	}
 }
