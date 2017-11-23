@@ -1,0 +1,65 @@
+.modal {
+	background-color: rgba($cBlack, 0.2);
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: -1;
+	width: 100vw;
+	height: 100vh;
+	opacity: 0;
+	transition: all .2s ease;
+
+	.modal-content {
+		width: 90%;
+		max-width: 600px;
+		margin: 100px auto;
+		padding: 20px;
+		background-color: $cDefault;
+		box-shadow: $boxShadow;
+		opacity: 0;
+		transform: translate(0, -30px);
+		transition: all .2s ease;
+	}
+
+	&.toggled {
+		opacity: 1;
+		z-index: 1000;
+
+		.modal-content {
+			opacity: 1;
+			transform: translate(0,0);
+		}
+	}
+
+	header {
+		margin-bottom: 20px;
+		padding-bottom: 10px;
+		border-bottom: 1px solid $cFadedBlack;
+
+		h1, h2, h3, h4, h5, h6 {
+			margin: 0;
+			padding: 0;
+			font-size: 1.5em;
+			text-align: left;
+		}
+	}
+
+	footer {
+		margin-top: 20px;
+		display: flex;
+
+		&, & > .btn-group {
+			justify-content: flex-end;
+		}
+
+		a.btn, button {
+			&.close {
+				background-color: lighten($cBlack, 40%);
+
+				&:hover {
+					background-color: lighten($cBlack, 60%);
+				}
+			}
+		}
+	}
+}

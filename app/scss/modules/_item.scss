@@ -1,0 +1,113 @@
+section.items {
+	display: flex;
+	justify-content: center;
+	flex-wrap: wrap;
+}
+
+article.item {
+	background-color: $cDefault;
+	box-shadow: $boxShadow;
+	margin: 10px;
+	padding: 15px;
+	width: 30%;
+	min-width: 450px;
+	max-width: 600px;
+
+	&.dummy {
+		box-shadow: none;
+		opacity: 0.5;
+		transition: opacity .2s ease;
+		border: 5px dashed $cFadedBlack;
+		background-color: rgba($cDefault, 0.5);
+		padding: 0;
+
+		&:hover {
+			opacity: 1;
+		}
+
+		> button {
+			border: 0;
+			margin: 0;
+			padding: 0;
+			background-color: transparent;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			width: 100%;
+			height: 100%;
+			cursor: pointer;
+			font-size: 3em;
+			color: $cFadedBlack;
+		}
+	}
+
+	button {
+		&.delete {
+			margin-left: auto;
+			margin-right: 0;
+		}
+	}
+
+	header, footer {
+		display: flex;
+	}
+
+	main {
+		margin: 10px 0;		
+	}
+
+	header {
+		align-items: center;
+
+		h2, & > span {
+			font-size: 1.5em;
+			margin: 0;
+			padding: 0;
+			font-weight: 700;
+		}
+
+		h2 > a {
+			text-decoration: none;
+			color: $cBlack;
+			display: flex;
+		}
+
+		> span.price {
+			margin-left: auto;
+		}
+	}
+
+	footer {
+		margin-top: auto;
+	}
+
+	table {
+		width: 100%;
+		border: 1px solid $cFadedBlack;
+
+		thead {
+			border-bottom: 1px solid $cFadedBlack;
+		}
+
+		tfoot {
+			border-top: 1px solid $cFadedBlack;
+
+			td {
+				font-weight: 700;
+			}
+		}
+
+		a {
+			text-decoration: none;
+			color: $cBlack;
+		}
+
+		input {
+			max-width: 70px;
+			text-align: center;
+			border: 1px solid $cFadedBlack;
+			outline: none;
+			padding: 2px 5px;
+		}
+	}
+}

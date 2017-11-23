@@ -11,39 +11,51 @@
         <link rel="stylesheet" href="css/styles.css">
         <link rel="author" href="humans.txt">
 
-        <script>var whTooltips = {colorLinks: false, iconizeLinks: false, renameLinks: false, iconSize: 'small'};</script>
-        <script src="//wow.zamimg.com/widgets/power.js"></script>
+        <!-- <script>var whTooltips = {colorLinks: false, iconizeLinks: false, renameLinks: false, iconSize: 'small'};</script> -->
+        <!-- <script src="//wow.zamimg.com/widgets/power.js"></script> -->
     </head>
     <body>
         <div class="background"></div>
         <div class="container scraper-container">
             <h1>Craftsman's Profits</h1>
-            <section class="settings">
-                <form class="settings">
-                    <p>
-                        <label for="region">Region</label>
-                        <select name="region" id="region">
-                            <option value="eu">Europe</option>
-                        </select>
-                    </p>
-                    <p>
-                        <label for="realm">Realm</label>
-                        <!-- <select name="realm" id="realm"></select> -->
-                        <input type="text" name="realm" id="realm"></input>
-                    </p>
-                    <p>
-                        <label for="locale">Locale</label>
-                        <select name="locale" id="locale">
-                            <option value="en_GB">en_GB</option>
-                        </select>
-                    </p>
-                    <p>
-                        <button type="submit">Save</button>
-                    </p>
-                </form>
-            </section>
+            <button data-trigger="modal" data-target="settings">Settings</button>
             <section class="items"></section>
         </div>
+
+        <section class="settings modal" data-modal="settings">
+            <form class="settings">
+                <article class="modal-content">
+                    <header>
+                        <h1>Settings</h1>
+                    </header>
+                    <main>
+                        <p>
+                            <label for="region">Region</label>
+                            <select name="region" id="region">
+                                <option value="eu">Europe</option>
+                            </select>
+                        </p>
+                        <p>
+                            <label for="realm">Realm</label>
+                            <!-- <select name="realm" id="realm"></select> -->
+                            <input type="text" name="realm" id="realm"></input>
+                        </p>
+                        <p>
+                            <label for="locale">Locale</label>
+                            <select name="locale" id="locale">
+                                <option value="en_GB">en_GB</option>
+                            </select>
+                        </p>
+                    </main>
+                    <footer>
+                        <div class="btn-group">
+                            <button class="close">Close</button>
+                            <button type="submit">Save</button>
+                        </div>
+                    </footer>
+                </article>
+            </form>
+        </section>
 
         <!-- <script id="item-template" type="text/x-handlebars-template">
            

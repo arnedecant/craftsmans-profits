@@ -54,10 +54,10 @@ let global = {
 	},
 	settings: {
 		timestamp: new Date(localStorage.getItem('timestamp')),
-		items: localStorage.getItem('items'),
-		realm: localStorage.getItem('realm'),
-		locale: localStorage.getItem('locale'),
-		namespace: localStorage.getItem('namespace'),
+		items: localStorage.getItem('items') || [],
+		realm: localStorage.getItem('realm') || 'Stormrage',
+		locale: localStorage.getItem('locale') || 'en_GB',
+		namespace: localStorage.getItem('namespace') || 'dynamic-eu',
 		auctions: JSON.parse(localStorage.getItem('auctions')) || []
 	},
 	data: {
@@ -67,8 +67,6 @@ let global = {
 }
 
 jQuery(document).ready(function($){
-	global.settings.locale = 'en_GB';
-	global.settings.namespace = 'dynamic-eu';
 	global.settings.items = items;
 
 	init();
@@ -80,7 +78,43 @@ function init() {
 
 	renderItems(global.settings.items);
 
+	initTriggers();
 	initSettings();
+}
+
+function initTriggers() {
+	const buttons = document.querySelectorAll('a[data-trigger], button[data-trigger]');
+
+	for (let i = 0, button; button = buttons[i]; i++) {
+		button.addEventListener('click', function(e) {
+			let trigger = button.dataset.trigger,
+				target = button.dataset.target;
+
+			let element = document.querySelector('[data-' + trigger + '="' + target + '"]');
+
+			let closeButtons = element.querySelectorAll('.close'),
+				forms = element.querySelectorAll('form');
+
+			element.classList.add('toggled');
+
+			document.addEventListener('keyup', function(e) { 
+				let key = e.keyCode || e.which;
+				if (key === 27) element.classList.remove('toggled');
+			});
+
+			for (let i = 0, closeButton; closeButton = closeButtons[i]; i++) {
+				closeButton.addEventListener('click', function(e) {
+					element.classList.remove('toggled');
+				});
+			}
+
+			for (let i = 0, form; form = forms[i]; i++) {
+				form.addEventListener('submit', function(e) {
+					element.classList.remove('toggled');
+				});
+			}
+		});
+	}
 }
 
 function initSettings() {

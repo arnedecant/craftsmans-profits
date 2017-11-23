@@ -1,0 +1,41 @@
+$labelWidth: 20%;
+
+form {
+	p {
+		margin: 5px 0;
+		padding: 0;
+		display: flex;
+		align-items: center;
+
+		&:first-child { margin-top: 0; }
+		&:last-child { margin-bottom: 0; }
+
+		label {
+			width: $labelWidth;
+		}
+
+		label + * {
+			width: 100% - $labelWidth;
+		}
+	}
+
+	input, textarea, select, option {
+		line-height: 1;
+		min-height: 0;
+		padding: 0;
+		box-sizing: content-box;
+		height: auto;
+	}
+
+	input, textarea, select {
+		padding: 6px;
+		font-family: $fPrimary;
+		border: 1px solid $cFadedBlack;
+		transition: border-color .3s ease;
+
+		&:focus {
+			outline: 0;
+			border-color: $cBlack;
+		}
+	}
+}
